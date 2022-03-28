@@ -4,7 +4,7 @@
 			<strong>Name: </strong> {{post.title}}
 		</div>
 		<div>
-			<strong>Text: </strong> {{post.description}}
+			<strong>Text: </strong> {{post.text}}
 		</div>
 	</div>
 </template>

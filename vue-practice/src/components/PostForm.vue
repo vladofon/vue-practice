@@ -2,8 +2,8 @@
 
 	<form @submit.prevent>
 		<h4>Create post</h4>
-		<input v-bind:value="title" @input="title = $event.target.value" class="input" type="text" placeholder="Enter post title">
-		<input v-bind:value="text" @input="text = $event.target.value" class="input" type="text" placeholder="Enter post text...">
+		<input v-model="post.title" class="input" type="text" placeholder="Enter post title">
+		<input v-model="post.text" class="input" type="text" placeholder="Enter post text...">
 		<button class="btn" @click="createPost">save</button>
 	</form>
 	
@@ -11,25 +11,24 @@
 
 <script>
 	export default {
-		props: ['posts'],
 		data() {
 			return {
-				title: '',
-				text: ''
+				post: {
+					title: '',
+					text: '',
+				}
 			}
 		},
 		methods: {
 			createPost() {
-				const post = {
-					id: Date.now(),
-					title: this.title,
-					description: this.text,
+				this.post.id = Date.now()
+				
+				this.$emit('create', this.post)
+				
+				this.post = {
+					title: '',
+					text: ''
 				}
-				
-				this.posts.push(post)
-				
-				this.title = ''
-				this.text = ''
 			}
 		}
 	}

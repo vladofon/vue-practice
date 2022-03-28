@@ -1,10 +1,15 @@
 <template>
 
 	<div>
-		<post-form :posts="posts"></post-form>
-		<div class="post" v-for="post in posts">
-			<post-row :post="post"></post-row>
+		<post-form :posts="posts" @create="createPost"></post-form>
+		
+		<div>
+			<h5>Posts list</h5>
+			<div class="post" v-for="post in posts">
+				<post-row :post="post"></post-row>
+			</div>
 		</div>
+
 	</div>
 
 </template>
@@ -16,16 +21,17 @@
 	export default {
 		data() {
 			return {
-				posts: [
-					{id: 0, title: 'JavaScript post', description: 'universal programming language'},
-					{id: 1, title: 'Java post', description: 'universal programming language'},
-					{id: 2, title: 'C++ post', description: 'universal programming language'},
-				],
+				posts: [],
 			}
 		},
 		components: {
 			PostForm,
 			PostRow
+		},
+		methods: {
+			createPost(post) {
+				this.posts.push(post)
+			}
 		}
 	}
 </script>
