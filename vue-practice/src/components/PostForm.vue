@@ -2,8 +2,8 @@
 
 	<form @submit.prevent>
 		<h4>Create post</h4>
-		<teal-input class="form-member" v-model="post.title" placeholder="Enter post title" />
-		<teal-input class="form-member" v-model="post.text" placeholder="Enter post text..." />
+		<teal-input class="form-member" v-model:value="post.title" placeholder="Enter post title" />
+		<teal-input class="form-member" v-model:value="post.text" placeholder="Enter post text..." />
 		<teal-button class="form-member submit" @click="createPost">save</teal-button>
 	</form>
 	

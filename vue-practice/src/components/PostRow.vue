@@ -11,7 +11,7 @@
 				</div>
 			</div>
 			<div class="post__btns">
-				<teal-button>Delete</teal-button>
+				<teal-button @click="$emit('remove', post)">Delete</teal-button>
 			</div>
 		</div>
 	</div>

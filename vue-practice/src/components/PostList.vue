@@ -5,8 +5,8 @@
 		
 		<div>
 			<h5>Posts list</h5>
-			<div v-for="post in posts">
-				<post-row :post="post"></post-row>
+			<div v-for="post in posts" :key="post.id">
+				<post-row :post="post" @remove="removePost"></post-row>
 			</div>
 		</div>
 
@@ -31,6 +31,9 @@
 		methods: {
 			createPost(post) {
 				this.posts.push(post)
+			},
+			removePost(post) {
+				this.posts = this.posts.filter(item => item.id !== post.id)
 			}
 		}
 	}
