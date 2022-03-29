@@ -5,7 +5,7 @@
 		
 		<div>
 			<h5>Posts list</h5>
-			<div class="post" v-for="post in posts">
+			<div v-for="post in posts">
 				<post-row :post="post"></post-row>
 			</div>
 		</div>
@@ -37,9 +37,5 @@
 </script>
 
 <style>
-	.post {
-		padding: 15px;
-		border: 3px solid teal;
-		margin-top: 15px;
-	}
+
 </style>

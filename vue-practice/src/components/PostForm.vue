@@ -2,9 +2,9 @@
 
 	<form @submit.prevent>
 		<h4>Create post</h4>
-		<input v-model="post.title" class="input" type="text" placeholder="Enter post title">
-		<input v-model="post.text" class="input" type="text" placeholder="Enter post text...">
-		<button class="btn" @click="createPost">save</button>
+		<teal-input class="form-member" v-model="post.title" placeholder="Enter post title" />
+		<teal-input class="form-member" v-model="post.text" placeholder="Enter post text..." />
+		<teal-button class="form-member submit" @click="createPost">save</teal-button>
 	</form>
 	
 </template>
@@ -39,19 +39,10 @@
 		display: flex;
 		flex-direction: column;
 	}
-	
-	.input {
-		width: 100%;
-		border: 1px solid teal;
-		padding: 10px 15px;
+	.form-member {
 		margin-top: 15px;
 	}
-	
-	.btn {
+	.submit {
 		align-self: flex-end;
-		margin-top: 15px;
-		padding: 10px 15px;
-		background: none;
-		border: 1px solid teal;
 	}
 </style>
