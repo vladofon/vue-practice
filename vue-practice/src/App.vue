@@ -1,7 +1,7 @@
 <template>
 
 	<div class="app">
-		<post-list></post-list>
+		<post-list ></post-list>
 	</div>
 
 </template>
@@ -12,6 +12,11 @@
 	export default {
 		components: {
 			PostList
+		},
+		data() {
+			return {
+				
+			}
 		}
 	}
 	

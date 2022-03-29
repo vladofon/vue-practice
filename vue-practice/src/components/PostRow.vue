@@ -7,7 +7,7 @@
 					<strong>Name: </strong> {{post.title}}
 				</div>
 				<div>
-					<strong>Text: </strong> {{post.text}}
+					<strong>Text: </strong> {{post.body}}
 				</div>
 			</div>
 			<div class="post__btns">
