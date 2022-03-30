@@ -30,14 +30,7 @@
 			<h4>Posts loading...</h4>
 		</div>
 	</div>
-	<div class="paginator__wrapper">
-		<div @click="changePage(pageNumber)" 
-				 class="paginator" 
-				 v-for="pageNumber in totalPages" :key="page" 
-				 :class="{'current-page': page === pageNumber}">
-			{{pageNumber}}
-		</div>
-	</div>
+	<div ref="observer" class="observer"></div>
 </template>
 
 <script>
@@ -94,13 +87,36 @@
 					this.isPostsLoading = false
 				}
 			},
-			changePage(pageNumber) {
-				this.page = pageNumber
-				this.fetchPosts()
-			}
+			async loadNewPosts() {
+				try {
+					this.page += 1
+					const response = await axios.get('https://jsonplaceholder.typicode.com/posts', {
+						params: {
+							_page: this.page,
+							_limit:this.limit
+						}
+					})
+					this.posts = [...this.posts, ...response.data]
+				} catch (e) {
+					alert('Fetch error')
+				}
+			},
 		},
 		mounted() {
 			this.fetchPosts()
+			
+			const options = {
+			    rootMargin: '0px',
+			    threshold: 1.0
+			}
+			const callback = (entries, observer) => {
+			    if(entries[0].isIntersecting && this.posts.length < this.totalPages * this.limit) {
+			    	this.loadNewPosts()
+			    }
+			};
+			const observer = new IntersectionObserver(callback, options);
+			observer.observe(this.$refs.observer)
+			
 		},
 		computed: {
 			sortedPosts() {
@@ -136,23 +152,8 @@
 		transition: transform 0.4s ease;
 	}
 	
-	.paginator__wrapper {
-		display: flex;
-		justify-content: center;
-		margin-top: 20px;
-	}
-	
-	.paginator {
-		border: 1px solid teal;
-		padding: 10px;
-		background: teal;
-		color: white;
-	}
-	
-	.current-page {
-		background: white;
-		color: black;
-		outline: 1px solid teal;
+	.observer {
+		
 	}
 	
 </style>
