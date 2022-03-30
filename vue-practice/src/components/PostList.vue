@@ -2,8 +2,9 @@
 
 	<h1>Main page</h1>
 	<div class="app__btns">
-		<div style="margin: 15px 0px">
-			<teal-button @click="showDialog">Create post</teal-button>
+		<div style="display: flex; justify-content: space-around;">
+			<teal-input v-model:value="searchQuery" placeholder="Find" style="margin-right: 15px"/>
+			<teal-button @click="showDialog" style="min-width: 110px">Create post</teal-button>
 		</div>
 		<teal-select v-model="selectedSort" :options="sortOptions"/>
 	</div>
@@ -16,7 +17,7 @@
 			<div v-if="posts.length > 0">
 				<h4>Posts list</h4>
 				<transition-group name="post-list">
-					<div v-for="post in sortedPosts" :key="post.id">
+					<div v-for="post in searchedAndSortedPosts" :key="post.id">
 						<post-row :post="post" @remove="removePost"></post-row>
 					</div>
 				</transition-group>
@@ -43,6 +44,7 @@
 				posts: [],
 				dialogVisible: false,
 				isPostsLoading: false,
+				searchQuery: '',
 				selectedSort: '',
 				sortOptions: [
 					{value: 'title', name: 'By title'},
@@ -83,6 +85,11 @@
 		computed: {
 			sortedPosts() {
 				return [...this.posts].sort((a,b) => a[this.selectedSort]?.localeCompare(b[this.selectedSort]))
+			},
+			searchedAndSortedPosts() {
+				return this.sortedPosts.filter(post => 
+					post.title.toLowerCase().includes(this.searchQuery.toLowerCase())
+				)
 			}
 		}
 	}
@@ -93,6 +100,7 @@
 	.app__btns {
 		display: flex;
 		justify-content: space-between;
+		margin: 15px 0px;
 	}
 
 	.post-list-enter-active,
