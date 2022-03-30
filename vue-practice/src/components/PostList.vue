@@ -30,7 +30,14 @@
 			<h4>Posts loading...</h4>
 		</div>
 	</div>
-
+	<div class="paginator__wrapper">
+		<div @click="changePage(pageNumber)" 
+				 class="paginator" 
+				 v-for="pageNumber in totalPages" :key="page" 
+				 :class="{'current-page': page === pageNumber}">
+			{{pageNumber}}
+		</div>
+	</div>
 </template>
 
 <script>
@@ -46,6 +53,9 @@
 				isPostsLoading: false,
 				searchQuery: '',
 				selectedSort: '',
+				page: 1,
+				limit: 10,
+				totalPages: 0,
 				sortOptions: [
 					{value: 'title', name: 'By title'},
 					{value: 'body', name: 'By description'},
@@ -70,13 +80,23 @@
 			async fetchPosts() {
 				try {
 					this.isPostsLoading = true
-					const response = await axios.get('https://jsonplaceholder.typicode.com/posts?_limit=10')
+					const response = await axios.get('https://jsonplaceholder.typicode.com/posts', {
+						params: {
+							_page: this.page,
+							_limit:this.limit
+						}
+					})
 					this.posts = response.data
+					this.totalPages = Math.ceil(response.headers['x-total-count'] / this.limit)
 				} catch (e) {
 					alert('Fetch error')
 				} finally {
 					this.isPostsLoading = false
 				}
+			},
+			changePage(pageNumber) {
+				this.page = pageNumber
+				this.fetchPosts()
 			}
 		},
 		mounted() {
@@ -114,6 +134,25 @@
 	}
 	.post-list-move {
 		transition: transform 0.4s ease;
+	}
+	
+	.paginator__wrapper {
+		display: flex;
+		justify-content: center;
+		margin-top: 20px;
+	}
+	
+	.paginator {
+		border: 1px solid teal;
+		padding: 10px;
+		background: teal;
+		color: white;
+	}
+	
+	.current-page {
+		background: white;
+		color: black;
+		outline: 1px solid teal;
 	}
 	
 </style>
