@@ -1,4 +1,5 @@
 <template>
+
 	<h1>Main page</h1>
 	<div class="app__btns">
 		<div style="margin: 15px 0px">
@@ -14,9 +15,11 @@
 		<div v-if="!isPostsLoading">
 			<div v-if="posts.length > 0">
 				<h4>Posts list</h4>
-				<div v-for="post in posts" :key="post.id">
-					<post-row :post="post" @remove="removePost"></post-row>
-				</div>
+				<transition-group name="post-list">
+					<div v-for="post in sortedPosts" :key="post.id">
+						<post-row :post="post" @remove="removePost"></post-row>
+					</div>
+				</transition-group>
 			</div>
 			<div v-else>
 				<h4>There are no any post...</h4>
@@ -76,13 +79,22 @@
 		},
 		mounted() {
 			this.fetchPosts()
+		},
+		computed: {
+			sortedPosts() {
+				return [...this.posts].sort((a,b) => a[this.selectedSort]?.localeCompare(b[this.selectedSort]))
+			}
 		}
 	}
 </script>
 
-<style>
+<style scoped>
+
 	.app__btns {
 		display: flex;
 		justify-content: space-between;
 	}
+
+
+	
 </style>
