@@ -1,13 +1,16 @@
 <template>
 	<h1>Main page</h1>
+	<div class="app__btns">
+		<div style="margin: 15px 0px">
+			<teal-button @click="showDialog">Create post</teal-button>
+		</div>
+		<teal-select v-model="selectedSort" :options="sortOptions"/>
+	</div>
 	<div>
 		<dialog-window v-model:show="dialogVisible">
 			<post-form @create="createPost"></post-form>
 		</dialog-window>
-		<div style="margin: 15px 0px">
-			<teal-button @click="fetchPosts">Load data</teal-button>
-			<teal-button @click="showDialog">Create post</teal-button>
-		</div>
+
 		<div v-if="!isPostsLoading">
 			<div v-if="posts.length > 0">
 				<h4>Posts list</h4>
@@ -19,7 +22,7 @@
 				<h4>There are no any post...</h4>
 			</div>
 		</div>
-		<div>
+		<div v-else>
 			<h4>Posts loading...</h4>
 		</div>
 	</div>
@@ -36,7 +39,12 @@
 			return {
 				posts: [],
 				dialogVisible: false,
-				isPostsLoading: false
+				isPostsLoading: false,
+				selectedSort: '',
+				sortOptions: [
+					{value: 'title', name: 'By title'},
+					{value: 'body', name: 'By description'},
+				]
 			}
 		},
 		components: {
@@ -73,5 +81,8 @@
 </script>
 
 <style>
-
+	.app__btns {
+		display: flex;
+		justify-content: space-between;
+	}
 </style>
