@@ -1,8 +1,18 @@
 <template>
 
 	<h1>Main page</h1>
-	<post-navbar @create="createPost" @sort="sortPosts" @search="searchPosts"/>
-	<post-list @remove="removePost" :posts="searchedAndSortedPosts"/>
+	
+	<post-navbar 
+		@create="createPost" 
+		@search="searchPosts"
+		@sort="sortPosts">
+	</post-navbar>
+	
+	<post-list 
+		@remove="removePost" 
+		:posts="searchedAndSortedPosts">
+	</post-list>
+	
 	<div ref="observer" class="observer"></div>
 	
 </template>

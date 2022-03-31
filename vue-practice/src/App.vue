@@ -1,17 +1,24 @@
 <template>
 
 	<div class="app">
-		<router-view></router-view>
+		<navbar />
+		<div class="container">
+		
+			<router-view></router-view>
+			
+		</div>
 	</div>
 
 </template>
 
 <script>
-	import PostList from './components/PostList.vue'
+	import PostList from '@/components/PostList.vue'
+	import Navbar from '@/components/Navbar.vue'
 	
 	export default {
 		components: {
-			PostList
+			PostList,
+			Navbar
 		},
 		data() {
 			return {
@@ -29,7 +36,7 @@
 		box-sizing: border-box;
 	}
 	
-	.app {
+	.container {
 		padding: 15px;
 	}
 
