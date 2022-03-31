@@ -20,7 +20,8 @@
 
 <script>
 	export default {
-		props: ['post']
+		props: ['post'],
+		emits: ['remove']
 	}
 </script>
 
