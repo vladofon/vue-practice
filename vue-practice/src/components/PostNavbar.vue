@@ -18,8 +18,8 @@
 		components: { PostForm },
 		data() {
 			return {
-				searchQuery: '',
 				dialogVisible: false,
+				searchQuery: '',
 				selectedSort: '',
 				sortOptions: [
 					{value: 'title', name: 'By title'},
@@ -27,7 +27,7 @@
 				]
 			}
 		},
-		emits: ['create', 'sort'],
+		emits: ['create', 'sort', 'search'],
 		methods: {
 			showDialog() {
 				this.dialogVisible = !this.dialogVisible
@@ -40,6 +40,9 @@
 		watch: {
 			selectedSort(newVal){
 				this.$emit('sort', this.selectedSort)
+			},
+			searchQuery(newVal) {
+				this.$emit('search', this.searchQuery)
 			}
 		}
 	}
