@@ -19,6 +19,7 @@
 				}
 			}
 		},
+		emits: ['create'],
 		methods: {
 			createPost() {
 				this.post.id = Date.now()
@@ -34,7 +35,7 @@
 	}
 </script>
 
-<style>
+<style scoped>
 	form {
 		display: flex;
 		flex-direction: column;
