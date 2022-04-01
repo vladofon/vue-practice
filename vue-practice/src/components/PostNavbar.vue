@@ -1,7 +1,7 @@
 <template>
 	<div class="app__btns">
 		<div class="nav-inputs">
-			<teal-input v-model:value="searchQuery" placeholder="Find" class="nav-input-left"/>
+			<teal-input v-focus v-model:value="searchQuery" placeholder="Find" class="nav-input-left"/>
 			<teal-button @click="showDialog" class="nav-input-right">Create post</teal-button>
 		</div>
 		<teal-select v-model="selectedSort" :options="sortOptions"/>

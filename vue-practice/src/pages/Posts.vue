@@ -13,7 +13,7 @@
 		:posts="searchedAndSortedPosts">
 	</post-list>
 	
-	<div ref="observer" class="observer"></div>
+	<div v-intersection="loadNewPosts" class="observer"></div>
 	
 </template>
 
@@ -83,18 +83,6 @@
 		},
 		mounted() {
 			this.fetchPosts();
-			
-			const options = {
-			    rootMargin: '0px',
-			    threshold: 1.0
-			}
-			const callback = (entries, observer) => {
-			    if(entries[0].isIntersecting && this.posts.length < this.totalPages * this.limit) {
-			    	this.loadNewPosts()
-			    }
-			};
-			const observer = new IntersectionObserver(callback, options);
-			observer.observe(this.$refs.observer)
 		},
 		computed: {
 			sortedPosts() {
