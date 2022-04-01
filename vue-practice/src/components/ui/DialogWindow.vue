@@ -1,5 +1,5 @@
 <template>
-	<div v-if="show" class="dialog" @click.stop="$emit('update:show', false)">
+	<div v-if="show" class="dialog" @click.stop="hideDialog">
 		<div @click.stop class="dialog__content">
 			<slot></slot>
 		</div>
@@ -7,9 +7,12 @@
 </template>
 
 <script>
+	import toggleMixin from '@/mixins/toggleMixin'
+
 	export default {
 		name: 'dialog-window',
-		props: ['show']
+		props: ['show'],
+		mixins: [toggleMixin]
 	}
 </script>
 
