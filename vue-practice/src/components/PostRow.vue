@@ -11,6 +11,7 @@
 				</div>
 			</div>
 			<div class="post__btns">
+				<teal-button @click="$router.push(`/posts/${post.id}`)" class="btn__member">View</teal-button>
 				<teal-button @click="$emit('remove', post)">Delete</teal-button>
 			</div>
 		</div>
@@ -33,5 +34,12 @@
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
+	}
+	.post__btns {
+		display: flex;
+		margin-left: 20px;
+	}
+	.btn__member {
+		margin-right: 10px;
 	}
 </style>
