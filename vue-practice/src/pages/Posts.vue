@@ -4,7 +4,7 @@
 	
 	<post-navbar 
 		@create="createPost" 
-		@search="searchPosts"
+		@search="searchPost"
 		@sort="sortPosts">
 	</post-navbar>
 	
@@ -20,81 +20,33 @@
 <script>
 	import PostNavbar from '@/components/PostNavbar.vue'
 	import PostList from '@/components/PostList.vue'
-	import axios from 'axios'
+	import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 	
 	export default {
 		components: { PostNavbar, PostList },
-		data() {
-			return {
-				posts: [],
-				isPostsLoading: false,
-				page: 1,
-				limit: 10,
-				totalPages: 0,
-				searchQuery: '',
-				selectedSort: '',
-			}
-		},
 		methods: {
-			createPost(post) {
-				this.posts.push(post)
-			},
-			removePost(post) {
-				this.posts = this.posts.filter(item => item.id !== post.id)
-			},
-			sortPosts(sort) {
-				this.selectedSort = sort
-			},
-			searchPosts(query) {
-				this.searchQuery = query
-			},
-			async fetchPosts() {
-				try {
-					this.isPostsLoading = true
-					const response = await axios.get('https://jsonplaceholder.typicode.com/posts', {
-						params: {
-							_page: this.page,
-							_limit:this.limit
-						}
-					})
-					this.posts = response.data
-					this.totalPages = Math.ceil(response.headers['x-total-count'] / this.limit)
-				} catch (e) {
-					alert('Fetch error')
-				} finally {
-					this.isPostsLoading = false
-				}
-			},
-			async loadNewPosts() {
-				try {
-					this.page += 1
-					const response = await axios.get('https://jsonplaceholder.typicode.com/posts', {
-						params: {
-							_page: this.page,
-							_limit:this.limit
-						}
-					})
-					this.posts = [...this.posts, ...response.data]
-				} catch (e) {
-					alert('Fetch error')
-				}
-			},
-			
-		},
-		mounted() {
-			this.fetchPosts();
+			...mapMutations({
+				createPost: 'post/createPost',
+				removePost: 'post/removePost',
+				searchPost: 'post/setSearchQuery',
+				sortPosts:  'post/setSelectedSort',
+			}),
+			...mapActions({
+				fetchPosts: 'post/fetchPosts',
+				loadNewPosts: 'post/loadNewPosts',
+			}),
 		},
 		computed: {
-			sortedPosts() {
-				return [...this.posts].sort((a,b) => a[this.selectedSort]?.localeCompare(b[this.selectedSort]))
-			},
-			searchedAndSortedPosts() {
-				return this.sortedPosts.filter(post => 
-					post.title.toLowerCase().includes(this.searchQuery.toLowerCase())
-				)
-			}
+			...mapGetters({
+				sortedPosts: 'post/sortedPosts',
+				searchedAndSortedPosts: 'post/searchedAndSortedPosts',
+			})
+		},
+		mounted() {
+			this.fetchPosts()
 		}
 	}
+
 </script>
 
 <style scoped>
