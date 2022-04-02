@@ -38,6 +38,21 @@ export default {
 		setSelectedSort(state, selectedSort) {
 			state.selectedSort = selectedSort
 		},
+		
+		createPost(state, post) {
+			state.posts = [
+				...state.posts,
+				post
+			]
+		},
+		removePost(state, post) {
+			const index = state.posts.findIndex(item => item.id === post.id)
+			
+			state.posts = [
+				...state.posts.slice(0, index),
+				...state.posts.slice(index + 1)
+			]
+		}
 
 	},
 	actions: {
