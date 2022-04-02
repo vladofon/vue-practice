@@ -1,3 +1,5 @@
+import axios from 'axios'
+
 export default {
 	namespaced: true,
 	state: () => ({
@@ -75,14 +77,14 @@ export default {
 		},
 		async loadNewPosts({state, commit}) {
 			try {
-				commit('setPage', state.page++)
+				commit('setPage', state.page + 1)
 				const response = await axios.get('https://jsonplaceholder.typicode.com/posts', {
 					params: {
 						_page:  state.page,
 						_limit: state.limit
 					}
 				})
-				commit('setPosts', [...this.posts, ...response.data])
+				commit('setPosts', [...state.posts, ...response.data])
 			} catch (e) {
 				console.log(e)
 			}
