@@ -9,12 +9,14 @@ export default {
 		selectedSort: '',
 	}),
 	getters: {
-		
+		sortedPosts(state) {
+			return [...state.posts].sort((a,b) => a[state.selectedSort]?.localeCompare(b[state.selectedSort]))
+		},
+		searchedAndSortedPosts(state, getters) {
+			return getters.sortedPosts.filter(post => 
+				post.title.toLowerCase().includes(state.searchQuery.toLowerCase())
+			)
+		},
 	},
-	mutations: {
-		
-	},
-	actions: {
-		
-	}
+
 }
