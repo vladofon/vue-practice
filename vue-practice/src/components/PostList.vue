@@ -15,24 +15,15 @@
 	<div v-else>
 		<h4>Posts loading...</h4>
 	</div>
-	<div ref="observer" class="observer"></div>
 </template>
 
 <script>
 	import PostForm from './PostForm.vue'
 	import PostRow from './PostRow.vue'
-	import axios from 'axios'
+	import { mapState } from 'vuex'
 	
 	export default {
 		props: ['posts'],
-		data() {
-			return {
-				isPostsLoading: false,
-				page: 1,
-				limit: 10,
-				totalPages: 0,
-			}
-		},
 		emits: ['remove'],
 		components: {
 			PostForm,
@@ -43,6 +34,11 @@
 				this.$emit('remove', post)
 			}
 		},
+		computed: {
+			...mapState({
+				isPostsLoading: state => state.post.isPostsLoading
+			})
+		}
 	}
 </script>
 
