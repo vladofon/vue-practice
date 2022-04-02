@@ -18,5 +18,26 @@ export default {
 			)
 		},
 	},
+	mutations: {
+		setPosts(state, posts) {
+			state.posts = posts
+		},
+		setPostsLoading(state, isPostsLoading) {
+			state.isPostsLoading = isPostsLoading
+		},
+		setPage(state, page) {
+			state.page = page
+		},
+		setTotalPages(state, totalPages) {
+			state.totalPages = totalPages
+		},
+		setSearchQuery(state, searchQuery) {
+			state.searchQuery = searchQuery
+		},
+		setSelectedSort(state, selectedSort) {
+			state.selectedSort = selectedSort
+		},
 
+	},
+	
 }
