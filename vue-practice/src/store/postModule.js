@@ -39,5 +39,37 @@ export default {
 		},
 
 	},
-	
+	actions: {
+		async fetchPosts({state, commit}) {
+			try {
+				commit('setPostsLoading', true)
+				const response = await axios.get('https://jsonplaceholder.typicode.com/posts', {
+					params: {
+						_page:  state.page,
+						_limit: state.limit
+					}
+				})
+				commit('setPosts', response.data)
+				commit('setTotalPages', Math.ceil(response.headers['x-total-count'] / state.limit))
+			} catch (e) {
+				console.log(e)
+			} finally {
+				commit('setPostsLoading', false)
+			}
+		},
+		async loadNewPosts({state, commit}) {
+			try {
+				commit('setPage', state.page++)
+				const response = await axios.get('https://jsonplaceholder.typicode.com/posts', {
+					params: {
+						_page:  state.page,
+						_limit: state.limit
+					}
+				})
+				commit('setPosts', [...this.posts, ...response.data])
+			} catch (e) {
+				console.log(e)
+			}
+		},
+	}
 }
