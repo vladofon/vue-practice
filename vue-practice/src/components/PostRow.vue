@@ -1,5 +1,4 @@
 <template>
-
 	<div>
 		<div class="post">
 			<div>
@@ -22,7 +21,7 @@
 <script>
 	export default {
 		props: ['post'],
-		emits: ['remove']
+		emits: ['remove'],
 	}
 </script>
 
